@@ -332,6 +332,7 @@ class UserManager
         $user->setToken($token);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
     }
 
     /**
