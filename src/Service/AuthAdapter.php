@@ -1,6 +1,7 @@
 <?php
 namespace ProspectOne\UserModule\Service;
 
+use ProspectOne\UserModule\Exception\LogicException;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
@@ -177,6 +178,10 @@ class AuthAdapter implements AdapterInterface
         /** @var User $user */
         $user = $this->entityManager->getRepository(User::class)
             ->findOneByToken($this->getAuthHeader());
+
+        if (empty($user)) {
+            throw new LogicException("Invalid user token");
+        }
 
         if(!empty($user) && $user->getStatus() !== User::STATUS_RETIRED) {
             return $user;
