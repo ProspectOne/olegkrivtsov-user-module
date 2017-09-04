@@ -8,5 +8,5 @@ namespace ProspectOne\UserModule\Exception;
  */
 class LogicException extends \LogicException
 {
-
+    const MESSAGE = "invalid user token";
 }
