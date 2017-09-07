@@ -265,7 +265,7 @@ class UserManager
      * @return mixed
      */
     public function getUserByPasswordResetToken(string $passwordResetToken) {
-        return $this->entityManager->getRepository(UserInterface::class)
+        return $this->entityManager->getRepository(User::class)
             ->findOneBy(['passwordResetToken'=>$passwordResetToken]);
     }
     
