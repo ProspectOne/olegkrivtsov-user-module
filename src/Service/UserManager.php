@@ -257,7 +257,7 @@ class UserManager
             return false; // expired
         }
         
-        return true;
+        return $user;
     }
     
     /**

@@ -352,7 +352,7 @@ class UserController extends AbstractActionController
         }
 
         if ($token === null ||
-            !$this->userManager->validatePasswordResetToken($token)
+            !$user = $this->userManager->validatePasswordResetToken($token)
         ) {
             return $this->redirect()->toRoute('user',
                 ['action' => 'message', 'id' => 'failed']);
@@ -389,7 +389,8 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'user' => $user
         ]);
     }
 
