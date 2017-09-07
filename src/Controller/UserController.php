@@ -355,10 +355,7 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('user',
                 ['action' => 'message', 'id' => 'failed']);
         }
-        /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)
-            ->findOneByPasswordResetToken($token);
-
+        $user = $this->userManager->getUserByPasswordResetToken($token);
         // Create form
         $form = new PasswordChangeForm('reset');
 

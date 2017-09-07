@@ -237,12 +237,13 @@ class UserManager
     
     /**
      * Checks whether the given password reset token is a valid one.
+     * @param string $passwordResetToken
+     * @return bool
      */
-    public function validatePasswordResetToken($passwordResetToken)
+    public function validatePasswordResetToken(string $passwordResetToken)
     {
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)
-                ->findOneByPasswordResetToken($passwordResetToken);
+        $user = $this->getUserByPasswordResetToken($passwordResetToken);
         
         if($user==null) {
             return false;
@@ -257,7 +258,17 @@ class UserManager
             return false; // expired
         }
         
-        return $user;
+        return true;
+    }
+
+    /**
+     * Find user by password reset token
+     * @param $passwordResetToken
+     * @return mixed
+     */
+    public function getUserByPasswordResetToken($passwordResetToken) {
+        return $this->entityManager->getRepository(User::class)
+            ->findOneByPasswordResetToken($passwordResetToken);
     }
     
     /**
