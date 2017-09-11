@@ -351,13 +351,11 @@ class UserController extends AbstractActionController
             throw new \Exception('Invalid token type or length');
         }
 
-        if ($token === null ||
-            !$this->userManager->validatePasswordResetToken($token)
-        ) {
+        if ($token === null || !$this->userManager->validatePasswordResetToken($token) ) {
             return $this->redirect()->toRoute('user',
                 ['action' => 'message', 'id' => 'failed']);
         }
-
+        $user = $this->userManager->getUserByPasswordResetToken($token);
         // Create form
         $form = new PasswordChangeForm('reset');
 
@@ -389,7 +387,8 @@ class UserController extends AbstractActionController
         }
 
         return new ViewModel([
-            'form' => $form
+            'form' => $form,
+            'user' => $user
         ]);
     }
 
