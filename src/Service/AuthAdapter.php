@@ -157,8 +157,7 @@ class AuthAdapter implements AdapterInterface
     public function authenticate()
     {
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)
-                ->findOneByEmail($this->email);
+        $user = $this->getUserByEmail($this->email);
         return $this->validateUser($user);
     }
 
@@ -176,14 +175,14 @@ class AuthAdapter implements AdapterInterface
         }
 
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)
-            ->findOneByToken($this->getAuthHeader());
+        $user = $this->getUserByToken($this->getAuthHeader());
 
         if (empty($user)) {
-            throw new LogicException("Invalid user token");
+            throw new LogicException(LogicException::MESSAGE);
         }
 
-        if(!empty($user) && $user->getStatus() !== User::STATUS_RETIRED) {
+        if(!empty($user) && $user->getStatus() !== $this->getRetiredStatus()) {
+            $this->setEmail($user->getEmail());
             return $user;
         }
 
@@ -206,7 +205,7 @@ class AuthAdapter implements AdapterInterface
 
         // If the user with such email exists, we need to check if it is active or retired.
         // Do not allow retired users to log in.
-        if ($user->getStatus() == User::STATUS_RETIRED) {
+        if ($user->getStatus() == $this->getRetiredStatus()) {
             return new Result(
                 Result::FAILURE,
                 null,
@@ -230,6 +229,31 @@ class AuthAdapter implements AdapterInterface
             null,
             ['Invalid credentials.']);
     }
+    /**
+     * Find user by password reset token
+     * @param string $token
+     * @return mixed
+     */
+    public function getUserByToken(string $token) {
+        return $this->entityManager->getRepository(User::class)
+            ->findOneByToken($token);
+    }
+
+    /**
+     * Find user by Email
+     * @param string $email
+     * @return mixed
+     */
+    public function getUserByEmail(string $email){
+        return $this->entityManager->getRepository(User::class)
+            ->findOneByEmail($email);
+    }
+
+    /**
+     * Get STATUS_RETIRED
+     * @return int
+     */
+    public function getRetiredStatus(){
+        return User::STATUS_RETIRED;
+    }
 }
-
-
