@@ -165,6 +165,8 @@ class UserManager
     {
         /** @var User $user */
         $user = $this->entityManager->getRepository(User::class)->findOneByEmail($email);
+        print_r($user);
+        echo $email;
         if($user && in_array($user->getRoleName(),$roles, true)) {
             return true;
         }
