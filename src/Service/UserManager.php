@@ -269,6 +269,12 @@ class UserManager
         return $this->entityManager->getRepository(User::class)
             ->findOneByPasswordResetToken($passwordResetToken);
     }
+
+    /**
+     * Find user by Email
+     * @param string $email
+     * @return mixed
+     */
     public function getUserByEmail(string $email){
         return $this->entityManager->getRepository(User::class)
             ->findOneByEmail($email);
