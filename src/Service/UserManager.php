@@ -164,7 +164,7 @@ class UserManager
     public function hasRole($email, $roles)
     {
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)->findOneByEmail($email);
+        $user = $this->getUserByEmail($email);
         if(in_array($user->getRoleName(),$roles, true)) {
             return true;
         }
@@ -172,12 +172,13 @@ class UserManager
     }
 
     /**
-     * Checks whether an active user with given email address already exists in the database.     
+     * Checks whether an active user with given email address already exists in the database.
+     * @param string $email
+     * @return bool
      */
-    public function checkUserExists($email) {
+    public function checkUserExists(string $email) {
         
-        $user = $this->entityManager->getRepository(User::class)
-                ->findOneByEmail($email);
+        $user = $this->getUserByEmail($email);
         
         return $user !== null;
     }
@@ -267,6 +268,10 @@ class UserManager
     public function getUserByPasswordResetToken(string $passwordResetToken) {
         return $this->entityManager->getRepository(User::class)
             ->findOneByPasswordResetToken($passwordResetToken);
+    }
+    public function getUserByEmail(string $email){
+        return $this->entityManager->getRepository(User::class)
+            ->findOneByEmail($email);
     }
     
     /**
