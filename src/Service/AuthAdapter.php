@@ -234,7 +234,8 @@ class AuthAdapter implements AdapterInterface
      * @param string $token
      * @return mixed
      */
-    public function getUserByToken(string $token) {
+    public function getUserByToken(string $token)
+    {
         return $this->entityManager->getRepository(User::class)
             ->findOneByToken($token);
     }
@@ -244,7 +245,8 @@ class AuthAdapter implements AdapterInterface
      * @param string $email
      * @return mixed
      */
-    public function getUserByEmail(string $email){
+    public function getUserByEmail(string $email)
+    {
         return $this->entityManager->getRepository(User::class)
             ->findOneByEmail($email);
     }
@@ -253,7 +255,8 @@ class AuthAdapter implements AdapterInterface
      * Get STATUS_RETIRED
      * @return int
      */
-    public function getRetiredStatus(){
+    public function getRetiredStatus()
+    {
         return User::STATUS_RETIRED;
     }
 }
