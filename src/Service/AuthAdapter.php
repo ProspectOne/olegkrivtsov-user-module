@@ -181,7 +181,7 @@ class AuthAdapter implements AdapterInterface
             throw new LogicException(LogicException::MESSAGE);
         }
 
-        if(!empty($user) && $user->getStatus() !== $this->getRetiredStatus()) {
+        if(!empty($user) && $user->getStatus() !== User::STATUS_RETIRED) {
             $this->setEmail($user->getEmail());
             return $user;
         }
@@ -249,14 +249,5 @@ class AuthAdapter implements AdapterInterface
     {
         return $this->entityManager->getRepository(User::class)
             ->findOneByEmail($email);
-    }
-
-    /**
-     * Get STATUS_RETIRED
-     * @return int
-     */
-    public function getRetiredStatus()
-    {
-        return User::STATUS_RETIRED;
     }
 }
