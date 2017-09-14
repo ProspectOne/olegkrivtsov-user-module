@@ -25,8 +25,8 @@ class AuthManagerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
         // Instantiate dependencies.
-        $authenticationService = $container->get(AuthenticationService::class);
         $sessionManager = $container->get(SessionManager::class);
+        $authenticationService = $container->get(AuthenticationService::class);
         
         // Get contents of 'access_filter' config key (the AuthManager service
         // will use this data to determine whether to allow currently logged in user
