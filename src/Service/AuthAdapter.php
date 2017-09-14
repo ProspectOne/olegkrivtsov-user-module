@@ -205,7 +205,7 @@ class AuthAdapter implements AdapterInterface
 
         // If the user with such email exists, we need to check if it is active or retired.
         // Do not allow retired users to log in.
-        if ($user->getStatus() == $this->getRetiredStatus()) {
+        if ($user->getStatus() == User::STATUS_RETIRED) {
             return new Result(
                 Result::FAILURE,
                 null,
