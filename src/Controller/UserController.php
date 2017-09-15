@@ -23,6 +23,7 @@ use ProspectOne\UserModule\Form\PasswordResetForm;
 class UserController extends AbstractActionController
 {
     const GUEST_ROLE_ID = 1;
+    const ERROR_PASSWORD_LENGTH = 'Sorry, password length must be more then 6 and less then 64 digits';
 
     /**
      * Entity manager.
@@ -259,8 +260,7 @@ class UserController extends AbstractActionController
 
                 // Try to change password.
                 if (!$this->userManager->changePassword($user, $data)) {
-                    $this->flashMessenger()->addErrorMessage(
-                        'Sorry, password length must be more then 6 and less then 64 digits');
+                    $this->flashMessenger()->addErrorMessage(self::ERROR_PASSWORD_LENGTH);
                 } else {
                     $this->flashMessenger()->addSuccessMessage(
                         'Changed the password successfully.');
