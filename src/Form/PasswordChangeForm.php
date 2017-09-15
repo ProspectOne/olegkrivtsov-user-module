@@ -36,19 +36,6 @@ class PasswordChangeForm extends Form
      */
     protected function addElements() 
     {
-        // If scenario is 'change', we do not ask for old password.
-        if ($this->scenario == 'change') {
-        
-            // Add "old_password" field
-            $this->add([            
-                'type'  => 'password',
-                'name' => 'old_password',
-                'options' => [
-                    'label' => 'Old Password',
-                ],
-            ]);       
-        }
-        
         // Add "new_password" field
         $this->add([            
             'type'  => 'password',
@@ -96,26 +83,6 @@ class PasswordChangeForm extends Form
         // Create main input filter
         $inputFilter = new InputFilter();        
         $this->setInputFilter($inputFilter);
-        
-        if ($this->scenario == 'change') {
-            
-            // Add input for "old_password" field
-            $inputFilter->add([
-                    'name'     => 'old_password',
-                    'required' => true,
-                    'filters'  => [                    
-                    ],                
-                    'validators' => [
-                        [
-                            'name'    => 'StringLength',
-                            'options' => [
-                                'min' => 6,
-                                'max' => 64
-                            ],
-                        ],
-                    ],
-                ]);      
-        }
         
         // Add input for "new_password" field
         $inputFilter->add([

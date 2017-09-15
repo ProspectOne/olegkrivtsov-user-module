@@ -260,7 +260,7 @@ class UserController extends AbstractActionController
                 // Try to change password.
                 if (!$this->userManager->changePassword($user, $data)) {
                     $this->flashMessenger()->addErrorMessage(
-                        'Sorry, the old password is incorrect. Could not set the new password.');
+                        'Sorry, password length must be more then 6 and less then 64 digits');
                 } else {
                     $this->flashMessenger()->addSuccessMessage(
                         'Changed the password successfully.');
