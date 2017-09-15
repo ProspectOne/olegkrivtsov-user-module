@@ -34,18 +34,18 @@ class UserManager
     /**
 	  * @return EntityManager
 	  */
-	  public function getEntityManager(): EntityManager
-	  {
-		  return $this->entityManager;
-	  }
+    public function getEntityManager(): EntityManager
+	{
+	    return $this->entityManager;
+	}
 
-	  /**
-	  * @return Bcrypt
-	  */
-	  public function getBcrypt(): Bcrypt
-	  {
-  		return $this->bcrypt;
-	  }
+	/**
+	* @return Bcrypt
+	*/
+	public function getBcrypt(): Bcrypt
+	{
+ 	    return $this->bcrypt;
+	}
   
     /**
      * UserManager constructor.
@@ -164,22 +164,19 @@ class UserManager
     public function hasRole($email, $roles)
     {
         /** @var User $user */
-        $user = $this->entityManager->getRepository(User::class)->findOneByEmail($email);
-        if(in_array($user->getRoleName(),$roles, true)) {
-            return true;
-        }
-        return false;
+        $user = $this->getUserByEmail($email);
+
+        return in_array($user->getRoleName(),$roles, true);
     }
 
     /**
-     * Checks whether an active user with given email address already exists in the database.     
+     * Checks whether an active user with given email address already exists in the database.
+     * @param string $email
+     * @return bool
      */
-    public function checkUserExists($email) {
-        
-        $user = $this->entityManager->getRepository(User::class)
-                ->findOneByEmail($email);
-        
-        return $user !== null;
+    public function checkUserExists(string $email)
+    {
+        return !empty($this->getUserByEmail($email));
     }
 
     /**
@@ -264,9 +261,21 @@ class UserManager
      * @param string $passwordResetToken
      * @return mixed
      */
-    public function getUserByPasswordResetToken(string $passwordResetToken) {
+    public function getUserByPasswordResetToken(string $passwordResetToken)
+    {
         return $this->entityManager->getRepository(User::class)
             ->findOneByPasswordResetToken($passwordResetToken);
+    }
+
+    /**
+     * Find user by Email
+     * @param string $email
+     * @return mixed
+     */
+    public function getUserByEmail(string $email)
+    {
+        return $this->entityManager->getRepository(User::class)
+            ->findOneByEmail($email);
     }
     
     /**
