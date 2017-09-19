@@ -9,26 +9,7 @@ $this->pageBreadcrumbs()->setItems([
             'Edit User'=>$this->url('users', ['action'=>'edit', 'id'=>$user->getId()])
             ]);
 
-$form->get('email')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'name@example.com'
-    ]);
-
-$form->get('full_name')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'John Doe'
-    ]);
-
-$form->get('role')->setAttributes([
-    'class'=>'form-control'
-]);
-
-$form->get('status')->setAttributes([
-    'class'=>'form-control'
-    ]);
-
 $form->get('submit')
-        ->setAttributes(['class'=>'btn btn-primary'])
         ->setValue('Save');
 
 $form->prepare();
