@@ -74,6 +74,13 @@ class User implements UserInterface
     protected $token;
 
     /**
+     * @var UserReportSettingsEntity
+     * @ORM\OneToOne(targetEntity="UserReportSettingsEntity", fetch="EAGER")
+     * @ORM\JoinColumn(name="r_userReportSettings")
+     */
+    protected $userReportSettings;
+
+    /**
      * Get role.
      * @return Role
      */
@@ -282,7 +289,7 @@ class User implements UserInterface
     /**
      * Sets password reset token's creation date.
      * @param string $date
-     * @return $this
+     * @return User
      */
     public function setPasswordResetTokenCreationDate($date) : User
     {
@@ -305,6 +312,24 @@ class User implements UserInterface
     public function setToken(?string $token): User
     {
         $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return UserReportSettingsEntity
+     */
+    public function getUserReportSettings()
+    {
+        return $this->userReportSettings;
+    }
+
+    /**
+     * @param UserReportSettingsEntity $userReportSettings
+     * @return User
+     */
+    public function setUserReportSettings(?$userReportSettings) : User
+    {
+        $this->userReportSettings = $userReportSettings;
         return $this;
     }
 }
