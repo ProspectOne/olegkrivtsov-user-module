@@ -4,8 +4,8 @@ namespace ProspectOne\UserModule\Service\Factory;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
-use ProspectOne\UserModule\Entity\User;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Authentication\AuthenticationService;
 use BadMethodCallException;
 
@@ -21,9 +21,9 @@ class CurrentUserFactory implements FactoryInterface
      * @param  ContainerInterface $container
      * @param  string $requestedName
      * @param  null|array $options
-     * @return User
+     * @return UserInterface
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null) : User
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null) : UserInterface
     {
         /** @var EntityManager $entityManager */
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
@@ -33,8 +33,10 @@ class CurrentUserFactory implements FactoryInterface
         if (empty($email)) {
             throw new BadMethodCallException("Can be created for only logged in users");
         }
-        /** @var User $user */
-        $user = $entityManager->getRepository(User::class)->findBy(['email' => $email])[0];
+        $config = $container->get("Config");
+        $userEntityClassName = $config['UserModule']['userEntity'];
+        /** @var UserInterface $user */
+        $user = $entityManager->getRepository($userEntityClassName)->findBy(['email' => $email])[0];
         return $user;
     }
 }

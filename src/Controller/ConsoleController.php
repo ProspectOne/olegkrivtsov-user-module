@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Developer
- * Date: 5/4/2017
- * Time: 1:02 PM
- */
 
 namespace ProspectOne\UserModule\Controller;
 
-
-use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Service\UserManager;
+use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Mvc\Controller\AbstractActionController;
 use Doctrine\ORM\EntityManager;
 
@@ -30,6 +23,11 @@ class ConsoleController extends AbstractActionController
      * @var \Doctrine\ORM\EntityManager
      */
     private $entityManager;
+
+    /**
+     * @var string
+     */
+    public $userEntityClassName;
 
     /**
      * @return UserManager
@@ -71,11 +69,13 @@ class ConsoleController extends AbstractActionController
      * ConsoleController constructor.
      * @param UserManager $userManager
      * @param EntityManager $entityManager
+     * @param $userEntityClassName
      */
-    public function __construct(UserManager $userManager, EntityManager $entityManager)
+    public function __construct(UserManager $userManager, EntityManager $entityManager, $userEntityClassName)
     {
         $this->userManager = $userManager;
         $this->entityManager = $entityManager;
+        $this->userEntityClassName = $userEntityClassName;
     }
 
     /**
@@ -83,8 +83,8 @@ class ConsoleController extends AbstractActionController
      */
     public function regenerateTokensAction()
     {
-        /** @var User[] $users */
-        $users = $this->entityManager->getRepository(User::class)->findAll();
+        /** @var UserInterface[] $users */
+        $users = $this->entityManager->getRepository($this->userEntityClassName)->findAll();
         foreach($users as $user) {
             $token = $this->getUserManager()->generateToken();
             $user->setToken($token);

@@ -1,6 +1,7 @@
 <?php
 namespace ProspectOne\UserModule;
 
+use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Factory\BcryptFactory;
 use ProspectOne\UserModule\Form\Factory\UserFormFactory;
 use ProspectOne\UserModule\Form\UserForm;
@@ -169,5 +170,8 @@ return [
             ],
         ],
     ],
+    'UserModule' => [
+        'userEntity' => User::class,
+    ]
 ];
 

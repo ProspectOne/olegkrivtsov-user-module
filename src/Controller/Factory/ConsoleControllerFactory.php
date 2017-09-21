@@ -2,7 +2,6 @@
 
 namespace ProspectOne\UserModule\Controller\Factory;
 
-
 use Interop\Container\ContainerInterface;
 use ProspectOne\UserModule\Controller\ConsoleController;
 use ProspectOne\UserModule\Service\UserManager;
@@ -26,6 +25,8 @@ class ConsoleControllerFactory implements FactoryInterface
     {
         $userManager = $container->get(UserManager::class);
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
-        return new ConsoleController($userManager, $entityManager);
+        $config = $container->get("Config");
+        $userEntityClassName = $config['UserModule']['userEntity'];
+        return new ConsoleController($userManager, $entityManager, $userEntityClassName);
     }
 }

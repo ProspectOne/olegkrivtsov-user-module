@@ -74,13 +74,6 @@ class User implements UserInterface
     protected $token;
 
     /**
-     * @var UserReportSettingsEntity
-     * @ORM\OneToOne(targetEntity="UserReportSettingsEntity", fetch="EAGER")
-     * @ORM\JoinColumn(name="r_userReportSettings")
-     */
-    protected $userReportSettings;
-
-    /**
      * Get role.
      * @return Role
      */
@@ -316,20 +309,18 @@ class User implements UserInterface
     }
 
     /**
-     * @return UserReportSettingsEntity
+     * @return int
      */
-    public function getUserReportSettings()
+    public function getStatusRetired()
     {
-        return $this->userReportSettings;
+        return self::STATUS_RETIRED;
     }
 
     /**
-     * @param UserReportSettingsEntity $userReportSettings
-     * @return User
+     * @return int
      */
-    public function setUserReportSettings(?$userReportSettings) : User
+    public function getStatusActive()
     {
-        $this->userReportSettings = $userReportSettings;
-        return $this;
+        return self::STATUS_ACTIVE;
     }
 }

@@ -30,6 +30,7 @@ class AuthAdapterFactory implements FactoryInterface
 
         $config = $container->get('Config');
         $headerEnabled = $config['ProspectOne\UserModule']['auth']['header'];
+        $userEntityClassName = $config['UserModule']['userEntity'];
 
         /** @var Request $request */
         $request = $container->get("Request");
@@ -45,6 +46,6 @@ class AuthAdapterFactory implements FactoryInterface
         }
                         
         // Create the AuthAdapter and inject dependency to its constructor.
-        return new AuthAdapter($entityManager, $bcrypt, $headerEnabled, $header);
+        return new AuthAdapter($entityManager, $bcrypt, $headerEnabled, $header, $userEntityClassName);
     }
 }

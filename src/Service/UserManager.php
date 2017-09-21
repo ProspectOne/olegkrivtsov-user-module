@@ -2,7 +2,6 @@
 namespace ProspectOne\UserModule\Service;
 
 use ProspectOne\UserModule\Entity\Role;
-use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
@@ -19,6 +18,11 @@ class UserManager
     const ADMIN_NAME = 'Admin';
     const ADMIN_PASSWORD = 'Secur1ty';
     const TOKEN_SIZE = 16;
+
+    /**
+     * @var string
+     */
+    public $userEntityClassName;
 
     /**
      * Doctrine entity manager.
@@ -46,16 +50,18 @@ class UserManager
 	{
  	    return $this->bcrypt;
 	}
-  
+
     /**
      * UserManager constructor.
      * @param EntityManager $entityManager
      * @param Bcrypt $bcrypt
+     * @param string $userEntityClassName
      */
-    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt)
+    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt, $userEntityClassName)
     {
         $this->entityManager = $entityManager;
         $this->bcrypt = $bcrypt;
+        $this->userEntityClassName = $userEntityClassName;
     }
     
     /**
@@ -69,7 +75,8 @@ class UserManager
         }
         
         // Create new User entity.
-        $user = new User();
+        /** @var UserInterface $user */
+        $user = new ($this->userEntityClassName)();
         $user->setEmail($data['email']);
         $user->setFullName($data['full_name']);
 
@@ -111,8 +118,8 @@ class UserManager
             throw new \Exception("Another user with email address " . $data['email'] . " already exists");
         }
 
-        if (!($user instanceof User)) {
-            throw new \LogicException("Only instances of " . User::class . " should be passed");
+        if (!($user instanceof UserInterface)) {
+            throw new \LogicException("Only instances of UserInterface should be passed");
         }
 
         $user->setEmail($data['email']);
@@ -137,14 +144,15 @@ class UserManager
      */
     public function createAdminUserIfNotExists()
     {
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([]);
+        $user = $this->entityManager->getRepository($this->userEntityClassName)->findOneBy([]);
         if ($user==null) {
-            $user = new User();
+            /** @var UserInterface $user */
+            $user = new ($this->userEntityClassName)();
             $user->setEmail(self::ADMIN_EMAIL);
             $user->setFullName(self::ADMIN_NAME);
             $passwordHash = $this->bcrypt->create(self::ADMIN_PASSWORD);
             $user->setPassword($passwordHash);
-            $user->setStatus(User::STATUS_ACTIVE);
+            $user->setStatus($user->getStatusActive());
             $user->setDateCreated(date('Y-m-d H:i:s'));
             // Get role object based on role Id from form
             /** @var Role $role */
@@ -163,7 +171,7 @@ class UserManager
      */
     public function hasRole($email, $roles)
     {
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = $this->getUserByEmail($email);
 
         return in_array($user->getRoleName(),$roles, true);
@@ -237,7 +245,7 @@ class UserManager
      */
     public function validatePasswordResetToken($passwordResetToken)
     {
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = $this->getUserByPasswordResetToken($passwordResetToken);
         
         if($user==null) {
@@ -263,7 +271,7 @@ class UserManager
      */
     public function getUserByPasswordResetToken(string $passwordResetToken)
     {
-        return $this->entityManager->getRepository(User::class)
+        return $this->entityManager->getRepository($this->userEntityClassName)
             ->findOneByPasswordResetToken($passwordResetToken);
     }
 
@@ -274,7 +282,7 @@ class UserManager
      */
     public function getUserByEmail(string $email)
     {
-        return $this->entityManager->getRepository(User::class)
+        return $this->entityManager->getRepository($this->userEntityClassName)
             ->findOneByEmail($email);
     }
     
