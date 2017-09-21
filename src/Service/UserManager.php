@@ -63,9 +63,12 @@ class UserManager
         $this->bcrypt = $bcrypt;
         $this->userEntityClassName = $userEntityClassName;
     }
-    
+
     /**
      * This method adds a new user.
+     * @param mixed $data
+     * @return UserInterface
+     * @throws \Exception
      */
     public function addUser($data) 
     {
@@ -107,7 +110,7 @@ class UserManager
     /**
      * This method updates data of an existing user.
      * @param UserInterface $user
-     * @param $data
+     * @param mixed $data
      * @return bool
      * @throws \Exception
      */
@@ -239,9 +242,11 @@ class UserManager
         $body .= "If you haven't asked to reset your password, please ignore this message.\n";
         mail($usermail, $subject, $body);
     }
-    
+
     /**
      * Checks whether the given password reset token is a valid one.
+     * @param string $passwordResetToken
+     * @return bool
      */
     public function validatePasswordResetToken($passwordResetToken)
     {
@@ -285,9 +290,12 @@ class UserManager
         return $this->entityManager->getRepository($this->userEntityClassName)
             ->findOneByEmail($email);
     }
-    
+
     /**
      * This method sets new password by password reset token.
+     * @param string $passwordResetToken
+     * @param string $newPassword
+     * @return bool
      */
     public function setNewPasswordByToken($passwordResetToken, $newPassword)
     {
@@ -361,4 +369,3 @@ class UserManager
         return $token;
     }
 }
-
