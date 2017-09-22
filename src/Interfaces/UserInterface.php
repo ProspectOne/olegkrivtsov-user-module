@@ -8,6 +8,7 @@ namespace ProspectOne\UserModule\Interfaces;
 interface UserInterface
 {
     public function addRole($role);
+    public function getId();
     public function getStatus();
     public function getPassword();
     public function getEmail();
