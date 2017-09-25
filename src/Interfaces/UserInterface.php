@@ -17,6 +17,7 @@ interface UserInterface
     public function getStatusRetired();
     public function getStatusActive();
     public function getRoleName();
+    public function getRole();
     public function getPasswordResetTokenCreationDate();
     public function setPassword($password);
     public function setToken(?string $token);

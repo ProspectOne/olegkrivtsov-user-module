@@ -149,9 +149,10 @@ class AuthAdapter implements AdapterInterface
     {
         return $this->password;
     }
-    
+
     /**
-     * Sets password.     
+     * Sets password.
+     * @param string $password
      */
     public function setPassword($password) 
     {
@@ -202,7 +203,7 @@ class AuthAdapter implements AdapterInterface
      */
     protected function validateUser(?UserInterface $user): Result
     {
-// If there is no such user, return 'Identity Not Found' status.
+        // If there is no such user, return 'Identity Not Found' status.
         if ($user == null) {
             return new Result(
                 Result::FAILURE_IDENTITY_NOT_FOUND,

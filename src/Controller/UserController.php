@@ -173,6 +173,7 @@ class UserController extends AbstractActionController
             return;
         }
 
+        /** @var UserInterface $user */
         $user = $this->entityManager->getRepository($this->userEntityClassName)
             ->find($id);
 
@@ -416,7 +417,7 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      * @return int
      */
     public function getUserRole($user)
