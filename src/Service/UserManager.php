@@ -79,7 +79,7 @@ class UserManager
         
         // Create new User entity.
         /** @var UserInterface $user */
-        $user = new ($this->userEntityClassName)();
+        $user = new $this->userEntityClassName();
         $user->setEmail($data['email']);
         $user->setFullName($data['full_name']);
 
@@ -150,7 +150,7 @@ class UserManager
         $user = $this->entityManager->getRepository($this->userEntityClassName)->findOneBy([]);
         if ($user==null) {
             /** @var UserInterface $user */
-            $user = new ($this->userEntityClassName)();
+            $user = new $this->userEntityClassName();
             $user->setEmail(self::ADMIN_EMAIL);
             $user->setFullName(self::ADMIN_NAME);
             $passwordHash = $this->bcrypt->create(self::ADMIN_PASSWORD);
