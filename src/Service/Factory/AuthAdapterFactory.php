@@ -46,6 +46,6 @@ class AuthAdapterFactory implements FactoryInterface
         }
                         
         // Create the AuthAdapter and inject dependency to its constructor.
-        return new AuthAdapter($entityManager, $bcrypt, $headerEnabled, $header, $userEntityClassName);
+        return new AuthAdapter($entityManager, $bcrypt, $headerEnabled, $header, '', $userEntityClassName);
     }
 }
