@@ -55,43 +55,6 @@ class AuthAdapter implements AdapterInterface
     public $userEntityClassName;
 
     /**
-     * @var UserInterface
-     */
-    protected $currentUser;
-
-    /**
-     * @return UserInterface
-     */
-    protected function getCurrentUser(): ?UserInterface
-    {
-        return $this->currentUser;
-    }
-
-    /**
-     * @param UserInterface $currentUser
-     * @return AuthAdapter
-     */
-    protected function setCurrentUser(UserInterface $currentUser): AuthAdapter
-    {
-        $this->currentUser = $currentUser;
-        return $this;
-    }
-
-    /**
-     * @return UserInterface
-     */
-    public function getCurrentUserEntity()
-    {
-        if(empty($this->getCurrentUser()) && !empty($this->getEmail())) {
-            $user = $this->getUserByEmail($this->getEmail());
-            if($user) {
-                $this->setCurrentUser($user);
-            }
-        }
-        return $this->getCurrentUser();
-    }
-
-    /**
      * @return \Doctrine\ORM\EntityManager
      */
     protected function getEntityManager()
