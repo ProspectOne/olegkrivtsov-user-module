@@ -9,34 +9,6 @@ $this->pageBreadcrumbs()->setItems([
             'Add User'=>$this->url('users', ['action'=>'add'])
             ]);
 
-$form->get('email')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'name@example.com'
-    ]);
-
-$form->get('full_name')->setAttributes([
-    'class'=>'form-control', 
-    'placeholder'=>'John Doe'
-    ]);
-
-$form->get('role')->setAttributes([
-    'class'=>'form-control'
-]);
-
-$form->get('status')->setAttributes([
-    'class'=>'form-control'
-    ]);
-
-$form->get('password')->setAttributes([
-    'class'=>'form-control'
-    ]);
-
-$form->get('confirm_password')->setAttributes([
-    'class'=>'form-control'
-    ]);
-
-$form->get('submit')->setAttributes(['class'=>'btn btn-primary']);
-
 $form->prepare();
 ?>
 

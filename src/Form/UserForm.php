@@ -115,6 +115,10 @@ class UserForm extends Form
         $this->add([
             'type' => 'text',
             'name' => 'email',
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder' => 'name@example.com'
+            ],
             'options' => [
                 'label' => 'E-mail',
             ],
@@ -124,6 +128,10 @@ class UserForm extends Form
         $this->add([
             'type' => 'text',
             'name' => 'full_name',
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder' => 'John Doe'
+            ],
             'options' => [
                 'label' => 'Full Name',
             ],
@@ -135,6 +143,9 @@ class UserForm extends Form
             $this->add([
                 'type' => 'password',
                 'name' => 'password',
+                'attributes' => [
+                    'class' => 'form-control'
+                ],
                 'options' => [
                     'label' => 'Password',
                 ],
@@ -144,6 +155,9 @@ class UserForm extends Form
             $this->add([
                 'type' => 'password',
                 'name' => 'confirm_password',
+                'attributes' => [
+                    'class' => 'form-control'
+                ],
                 'options' => [
                     'label' => 'Confirm password',
                 ],
@@ -154,7 +168,6 @@ class UserForm extends Form
         $this->add([
             'type' => 'select',
             'name' => 'role',
-
             'options' => [
                 'label' => 'Role',
                 'value_options' => $this->rolesselector,
@@ -162,6 +175,7 @@ class UserForm extends Form
             ],
             'attributes' => [
                 'value' => $this->rolecurrent,
+                'class' => 'form-control'
             ]
         ]);
 
@@ -169,6 +183,9 @@ class UserForm extends Form
         $this->add([
             'type' => 'select',
             'name' => 'status',
+            'attributes' => [
+                'class' => 'form-control'
+            ],
             'options' => [
                 'label' => 'Status',
                 'value_options' => [
@@ -183,7 +200,8 @@ class UserForm extends Form
             'type' => 'submit',
             'name' => 'submit',
             'attributes' => [
-                'value' => 'Create'
+                'value' => 'Create',
+                'class' => 'btn btn-primary'
             ],
         ]);
     }
