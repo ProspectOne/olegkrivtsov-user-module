@@ -2,7 +2,7 @@
 namespace ProspectOne\UserModule\Controller;
 
 use Doctrine\ORM\EntityManager;
-use ProspectOne\UserModule\RoleEntity\Role;
+use ProspectOne\UserModule\Entity\Role;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use ProspectOne\UserModule\Service\UserManager;
 use Zend\Form\FormInterface;

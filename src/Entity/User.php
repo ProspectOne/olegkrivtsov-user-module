@@ -3,7 +3,6 @@ namespace ProspectOne\UserModule\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ProspectOne\UserModule\Interfaces\UserInterface;
-use ProspectOne\UserModule\RoleEntity\Role;
 
 /**
  * This class represents a registered user.
@@ -21,7 +20,7 @@ class User implements UserInterface
 
     /**
      * @var Role
-     * @ORM\ManyToOne(targetEntity="ProspectOne\UserModule\RoleEntity\Role", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="ProspectOne\UserModule\Entity\Role", fetch="EAGER")
      * @ORM\JoinColumn(name="r_user_role")
      */
     protected $role;

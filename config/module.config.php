@@ -137,20 +137,14 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'ProspectOne\UserModule_driver' => [
+            __NAMESPACE__ . '_driver' => [
                 'class' => AnnotationDriver::class,
                 'cache' => 'array',
                 'paths' => [__DIR__ . '/../src/Entity']
             ],
-            'ProspectOne\RoleEntity_driver' => [
-                'class' => AnnotationDriver::class,
-                'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/RoleEntity']
-            ],
             'orm_default' => [
                 'drivers' => [
-                    'ProspectOne\UserModule\Entity' => 'ProspectOne\UserModule_driver',
-                    'ProspectOne\UserModule\RoleEntity' => 'ProspectOne\RoleEntity_driver',
+                    __NAMESPACE__ . '\Entity' => __NAMESPACE__ . '_driver'
                 ]
             ]
         ]

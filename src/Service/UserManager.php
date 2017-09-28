@@ -1,7 +1,7 @@
 <?php
 namespace ProspectOne\UserModule\Service;
 
-use ProspectOne\UserModule\RoleEntity\Role;
+use ProspectOne\UserModule\Entity\Role;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace ProspectOne\UserModule\RoleEntity;
+namespace ProspectOne\UserModule\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
