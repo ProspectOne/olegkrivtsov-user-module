@@ -149,8 +149,7 @@ class UserController extends AbstractActionController
         }
 
         // Find a user with such ID.
-        $user = $this->entityManager->getRepository($this->userEntityClassName)
-            ->find($id);
+        $user = $this->getUserById($id);
 
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -174,8 +173,7 @@ class UserController extends AbstractActionController
         }
 
         /** @var UserInterface $user */
-        $user = $this->entityManager->getRepository($this->userEntityClassName)
-            ->find($id);
+        $user = $this->getUserById($id);
 
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
