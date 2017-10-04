@@ -16,8 +16,8 @@ use ProspectOne\UserModule\Form\PasswordChangeForm;
 use ProspectOne\UserModule\Form\PasswordResetForm;
 
 /**
- * This controller is responsible for user management (adding, editing,
- * viewing users and changing user's password).
+ * Class UserController
+ * @package ProspectOne\UserModule\Controller
  */
 class UserController extends AbstractActionController
 {
