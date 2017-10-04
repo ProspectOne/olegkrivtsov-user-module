@@ -1,9 +1,12 @@
 <?php
 namespace ProspectOne\UserModule;
 
+use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Factory\BcryptFactory;
 use ProspectOne\UserModule\Form\Factory\UserFormFactory;
 use ProspectOne\UserModule\Form\UserForm;
+use ProspectOne\UserModule\Service\AuthAdapterService;
+use ProspectOne\UserModule\Service\Factory\AuthAdapterServiceFactory;
 use ProspectOne\UserModule\Service\Factory\CurrentUserFactory;
 use ProspectOne\UserModule\Service\Factory\SessionStorageFactory;
 use Zend\Router\Http\Literal;
@@ -110,6 +113,7 @@ return [
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
+            AuthAdapterService::class => AuthAdapterServiceFactory::class,
             'ProspectOne\UserModule\Bcrypt' => BcryptFactory::class,
             'ProspectOne\UserModule\CurrentUser' => CurrentUserFactory::class,
             UserForm::class => UserFormFactory::class,
@@ -169,5 +173,8 @@ return [
             ],
         ],
     ],
+    'UserModule' => [
+        'userEntity' => User::class,
+    ]
 ];
 

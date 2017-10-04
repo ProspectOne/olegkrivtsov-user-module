@@ -4,8 +4,8 @@ namespace ProspectOne\UserModule\Form\Factory;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
+use ProspectOne\UserModule\Interfaces\UserInterface;
 use Interop\Container\Exception\ContainerException;
-use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Form\UserForm;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;

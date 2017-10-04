@@ -147,9 +147,7 @@ class AuthManager
                 $actionList = $item['actions'];
                 $allow = $item['allow'];
                 if (
-                    (is_array($actionList) && in_array($actionName, $actionList)) ||
-                    $actionList=='*'
-                ) {
+                    (is_array($actionList) && in_array($actionName, $actionList)) || $actionList=='*') {
                     if ($allow=='*') {
                         return true; // Anyone is allowed to see the page.
                     }

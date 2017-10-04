@@ -282,7 +282,7 @@ class User implements UserInterface
     /**
      * Sets password reset token's creation date.
      * @param string $date
-     * @return $this
+     * @return User
      */
     public function setPasswordResetTokenCreationDate($date) : User
     {
@@ -306,5 +306,21 @@ class User implements UserInterface
     {
         $this->token = $token;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusRetired()
+    {
+        return self::STATUS_RETIRED;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusActive()
+    {
+        return self::STATUS_ACTIVE;
     }
 }
