@@ -2,7 +2,6 @@
 namespace ProspectOne\UserModule\Validator;
 
 use Zend\Validator\AbstractValidator;
-use ProspectOne\UserModule\Entity\User;
 
 /**
  * This validator class is designed for checking if there is an existing user 

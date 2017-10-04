@@ -24,7 +24,10 @@ class UserManagerFactory
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         /** @var Bcrypt $bcrypt */
         $bcrypt = $container->get('ProspectOne\UserModule\Bcrypt');
+
+        $config = $container->get("Config");
+        $userEntityClassName = $config['UserModule']['userEntity'];
                         
-        return new UserManager($entityManager, $bcrypt);
+        return new UserManager($entityManager, $bcrypt, $userEntityClassName);
     }
 }

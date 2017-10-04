@@ -11,7 +11,6 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
-use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Form\UserForm;
 use ProspectOne\UserModule\Form\PasswordChangeForm;
 use ProspectOne\UserModule\Form\PasswordResetForm;
@@ -24,6 +23,11 @@ class UserController extends AbstractActionController
 {
     const GUEST_ROLE_ID = 1;
     const ERROR_PASSWORD_LENGTH = 'Sorry, password length must be more then 6 and less then 64 digits';
+
+    /**
+     * @var mixed
+     */
+    public $userEntityClassName;
 
     /**
      * Entity manager.
@@ -91,6 +95,8 @@ class UserController extends AbstractActionController
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
         $this->container = $container;
+        $config = $this->container->get("Config");
+        $this->userEntityClassName = $config['UserModule']['userEntity'];
         $this->userRoleId = $userRoleId;
     }
 
@@ -100,7 +106,7 @@ class UserController extends AbstractActionController
      */
     public function indexAction()
     {
-        $users = $this->entityManager->getRepository(User::class)
+        $users = $this->entityManager->getRepository($this->userEntityClassName)
             ->findBy([], ['id' => 'ASC']);
 
         return new ViewModel([
@@ -158,8 +164,7 @@ class UserController extends AbstractActionController
         }
 
         // Find a user with such ID.
-        $user = $this->entityManager->getRepository(User::class)
-            ->find($id);
+        $user = $this->getUserById($id);
 
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -182,8 +187,8 @@ class UserController extends AbstractActionController
             return;
         }
 
-        $user = $this->entityManager->getRepository(User::class)
-            ->find($id);
+        /** @var UserInterface $user */
+        $user = $this->getUserById($id);
 
         if ($user == null) {
             $this->getResponse()->setStatusCode(404);
@@ -234,7 +239,7 @@ class UserController extends AbstractActionController
      */
     protected function getUserById($id)
     {
-        $user = $this->entityManager->getRepository(User::class)->find($id);
+        $user = $this->entityManager->getRepository($this->userEntityClassName)->find($id);
         return $user;
     }
 
@@ -313,7 +318,7 @@ class UserController extends AbstractActionController
             if ($form->isValid()) {
 
                 // Look for the user with such email.
-                $user = $this->entityManager->getRepository(User::class)
+                $user = $this->entityManager->getRepository($this->userEntityClassName)
                     ->findOneByEmail($data['email']);
                 if ($user != null) {
                     // Generate a new password for user and send an E-mail 
@@ -425,7 +430,7 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      * @return int
      */
     public function getUserRole($user)
