@@ -16,8 +16,8 @@ use ProspectOne\UserModule\Form\PasswordChangeForm;
 use ProspectOne\UserModule\Form\PasswordResetForm;
 
 /**
- * This controller is responsible for user management (adding, editing,
- * viewing users and changing user's password).
+ * Class UserController
+ * @package ProspectOne\UserModule\Controller
  */
 class UserController extends AbstractActionController
 {
@@ -47,6 +47,11 @@ class UserController extends AbstractActionController
     private $container;
 
     /**
+     * @var int
+     */
+    private $userRoleId;
+
+    /**
      * @return EntityManager
      */
     public function getEntityManager(): EntityManager
@@ -71,18 +76,28 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * @return int
+     */
+    public function getUserRoleId(): int
+    {
+        return $this->userRoleId;
+    }
+
+    /**
      * Constructor.
      * @param EntityManager $entityManager
      * @param UserManager $userManager
      * @param ServiceLocatorInterface $container
+     * @param int $userRoleId
      */
-    public function __construct(EntityManager $entityManager, UserManager $userManager, ServiceLocatorInterface $container)
+    public function __construct(EntityManager $entityManager, UserManager $userManager, ServiceLocatorInterface $container, int $userRoleId)
     {
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
         $this->container = $container;
         $config = $this->container->get("Config");
         $this->userEntityClassName = $config['UserModule']['userEntity'];
+        $this->userRoleId = $userRoleId;
     }
 
     /**
@@ -107,7 +122,7 @@ class UserController extends AbstractActionController
         $rolesselector = $this->getRolesSelector();
 
         // Create user form
-        $form = $this->container->build(UserForm::class, ['create', $this->entityManager, null, $rolesselector, self::GUEST_ROLE_ID]);
+        $form = $this->container->build(UserForm::class, ['create', $this->entityManager, null, $rolesselector, $this->getUserRoleId()]);
 
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
@@ -421,7 +436,7 @@ class UserController extends AbstractActionController
     public function getUserRole($user)
     {
         // checking for existing role if editing mode
-        $rolecurrent['role_id'] = self::GUEST_ROLE_ID;
+        $rolecurrent['role_id'] = $this->getUserRoleId();
         $hydrator = new ClassMethods();
         $role = $user->getRole();
         if (!empty($role)) {
