@@ -13,6 +13,8 @@ interface UserInterface
     public function getPassword();
     public function getEmail();
     public function getFullName();
+    public function getFirstName();
+    public function getLastName();
     public function getToken();
     public function getStatusRetired();
     public function getStatusActive();
@@ -25,6 +27,8 @@ interface UserInterface
     public function setPasswordResetTokenCreationDate($data);
     public function setEmail($email);
     public function setFullName($fullName);
+    public function setFirstName($firstName);
+    public function setLastName($firstName);
     public function setStatus($status);
     public function setDateCreated($dateCreated);
 }

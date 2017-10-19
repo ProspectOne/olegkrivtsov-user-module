@@ -29,9 +29,15 @@ $form->prepare();
         </div>
         
         <div class="form-group">
-            <?= $this->formLabel($form->get('full_name')); ?>
-            <?= $this->formElement($form->get('full_name')); ?>
-            <?= $this->formElementErrors($form->get('full_name')); ?>                  
+            <?= $this->formLabel($form->get('first_name')); ?>
+            <?= $this->formElement($form->get('first_name')); ?>
+            <?= $this->formElementErrors($form->get('first_name')); ?>
+        </div>
+
+        <div class="form-group">
+            <?= $this->formLabel($form->get('last_name')); ?>
+            <?= $this->formElement($form->get('last_name')); ?>
+            <?= $this->formElementErrors($form->get('last_name')); ?>
         </div>
         
         <div class="form-group">

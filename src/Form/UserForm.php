@@ -124,16 +124,29 @@ class UserForm extends Form
             ],
         ]);
 
-        // Add "full_name" field
+        // Add "first_name" field
         $this->add([
             'type' => 'text',
-            'name' => 'full_name',
+            'name' => 'first_name',
             'attributes' => [
                 'class' => 'form-control',
-                'placeholder' => 'John Doe'
+                'placeholder' => 'John'
             ],
             'options' => [
-                'label' => 'Full Name',
+                'label' => 'First Name',
+            ],
+        ]);
+
+        // Add "last_name" field
+        $this->add([
+            'type' => 'text',
+            'name' => 'last_name',
+            'attributes' => [
+                'class' => 'form-control',
+                'placeholder' => 'Doe'
+            ],
+            'options' => [
+                'label' => 'Last Name',
             ],
         ]);
 
@@ -247,9 +260,27 @@ class UserForm extends Form
             ],
         ]);
 
-        // Add input for "full_name" field
+        // Add input for "first_name" field
         $inputFilter->add([
-            'name' => 'full_name',
+            'name' => 'first_name',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StringTrim'],
+            ],
+            'validators' => [
+                [
+                    'name' => 'StringLength',
+                    'options' => [
+                        'min' => 1,
+                        'max' => 512
+                    ],
+                ],
+            ],
+        ]);
+
+        // Add input for "last_name" field
+        $inputFilter->add([
+            'name' => 'last_name',
             'required' => true,
             'filters' => [
                 ['name' => 'StringTrim'],

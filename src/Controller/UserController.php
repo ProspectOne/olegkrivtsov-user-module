@@ -464,7 +464,8 @@ class UserController extends AbstractActionController
     protected function setFormData(FormInterface $form, UserInterface $user)
     {
         $form->setData(array(
-            'full_name' => $user->getFullName(),
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
             'email' => $user->getEmail(),
             'status' => $user->getStatus(),
         ));
