@@ -80,8 +80,11 @@ class UserManager
         // Create new User entity.
         /** @var UserInterface $user */
         $user = new $this->userEntityClassName();
-        $user->setEmail($data['email']);
-        $user->setFullName($data['full_name']);
+        $user->setEmail($data['email'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
+            ->setStatus($data['status']);
+
 
         // Get role object based on role Id from form
         /** @var Role $role */
@@ -92,8 +95,6 @@ class UserManager
         // Encrypt password and store the password in encrypted state.
         $passwordHash = $this->bcrypt->create($data['password']);
         $user->setPassword($passwordHash);
-        
-        $user->setStatus($data['status']);
         
         $currentDate = date('Y-m-d H:i:s');
         $user->setDateCreated($currentDate);        
@@ -125,9 +126,10 @@ class UserManager
             throw new \LogicException("Only instances of UserInterface should be passed");
         }
 
-        $user->setEmail($data['email']);
-        $user->setFullName($data['full_name']);
-        $user->setStatus($data['status']);
+        $user->setEmail($data['email'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
+            ->setStatus($data['status']);
 
         // Get role object based on role Id from form
         /** @var Role $role */
@@ -151,12 +153,14 @@ class UserManager
         if ($user==null) {
             /** @var UserInterface $user */
             $user = new $this->userEntityClassName();
-            $user->setEmail(self::ADMIN_EMAIL);
-            $user->setFullName(self::ADMIN_NAME);
             $passwordHash = $this->bcrypt->create(self::ADMIN_PASSWORD);
-            $user->setPassword($passwordHash);
-            $user->setStatus($user->getStatusActive());
-            $user->setDateCreated(date('Y-m-d H:i:s'));
+            $user->setEmail(self::ADMIN_EMAIL)
+                ->setFirstName(self::ADMIN_NAME)
+                ->setLastName(self::ADMIN_NAME)
+                ->setStatus($user->getStatusActive())
+                ->setDateCreated(date('Y-m-d H:i:s'))
+                ->setPassword($passwordHash);
+
             // Get role object based on role Id from form
             /** @var Role $role */
             $role = $this->entityManager->find(Role::class, self::ADMIN_ROLE_ID);

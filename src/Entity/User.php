@@ -43,6 +43,16 @@ class User implements UserInterface
     protected $fullName;
 
     /**
+     * @ORM\Column(name="first_name")
+     */
+    protected $firstName;
+
+    /**
+     * @ORM\Column(name="last_name")
+     */
+    protected $lastName;
+
+    /**
      * @ORM\Column(name="password")
      */
     protected $password;
@@ -162,6 +172,56 @@ class User implements UserInterface
     public function setFullName($fullName) : User
     {
         $this->fullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * Returns first name.
+     * @return string
+     */
+    public function getFirstName()
+    {
+        if(empty($this->firstName) && !empty($this->getFullName())){
+            $fullNameArray = explode(' ',$this->getFullName());
+            $firstName = isset($fullNameArray[0]) ? $fullNameArray[0] : '';
+            $this->setFirstName($firstName);
+        }
+        return $this->firstName;
+    }
+
+    /**
+     * Sets first name.
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName) : User
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * Returns last name.
+     * @return string
+     */
+    public function getLastName()
+    {
+        if(empty($this->lastName) && !empty($this->getFullName())){
+            $fullNameArray = explode(' ',$this->getFullName());
+            $lastName = isset($fullNameArray[1]) ? $fullNameArray[1] : '';
+            $this->setLastName($lastName);
+        }
+        return $this->lastName;
+    }
+
+    /**
+     * Sets last name.
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName) : User
+    {
+        $this->lastName = $lastName;
         return $this;
     }
 
