@@ -182,7 +182,9 @@ class User implements UserInterface
     public function getFirstName()
     {
         if(empty($this->firstName) && !empty($this->getFullName())){
-            $this->setFirstName(explode(' ',$this->getFullName())[0]);
+            $fullNameArray = explode(' ',$this->getFullName());
+            $firstName = isset($fullNameArray[0]) ? $fullNameArray[0] : '';
+            $this->setFirstName($firstName);
         }
         return $this->firstName;
     }
@@ -205,7 +207,9 @@ class User implements UserInterface
     public function getLastName()
     {
         if(empty($this->lastName) && !empty($this->getFullName())){
-            $this->setLastName(explode(' ',$this->getFullName())[1]);
+            $fullNameArray = explode(' ',$this->getFullName());
+            $lastName = isset($fullNameArray[1]) ? $fullNameArray[1] : '';
+            $this->setLastName($lastName);
         }
         return $this->lastName;
     }
