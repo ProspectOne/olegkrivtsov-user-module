@@ -246,7 +246,7 @@ class AuthAdapter implements AdapterInterface
     public function getUserByToken(string $token, bool $refresh = false)
     {
         $user =  $this->entityManager->getRepository($this->userEntityClassName)->findOneByToken($token);
-        if ($refresh) {
+        if ($refresh && !empty($user)) {
             $this->entityManager->refresh($user);
         }
         return $user;
