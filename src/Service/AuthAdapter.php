@@ -240,12 +240,16 @@ class AuthAdapter implements AdapterInterface
     /**
      * Find user by password reset token
      * @param string $token
+     * @param bool $refresh
      * @return mixed
      */
-    public function getUserByToken(string $token)
+    public function getUserByToken(string $token, bool $refresh = false)
     {
-        return $this->entityManager->getRepository($this->userEntityClassName)
-            ->findOneByToken($token);
+        $user =  $this->entityManager->getRepository($this->userEntityClassName)->findOneByToken($token);
+        if ($refresh) {
+            $this->entityManager->refresh($user);
+        }
+        return $user;
     }
 
     /**
