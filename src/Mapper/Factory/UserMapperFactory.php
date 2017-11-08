@@ -4,6 +4,7 @@ namespace ProspectOne\UserModule\Mapper\Factory;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use ProspectOne\UserModule\Mapper\UserMapper;
+use Zend\Hydrator\AbstractHydrator;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
@@ -28,7 +29,10 @@ class UserMapperFactory implements FactoryInterface
         $config = $container->get('Config');
         $userEntityClassName = $config['UserModule']['userEntity'];
         $repository = $em->getRepository($userEntityClassName);
-        $userMapper = new UserMapper($repository);
+
+        /** @var AbstractHydrator $hydrator */
+        $hydrator = $container->get('ProspectOne\UserModule\UserHydrator');
+        $userMapper = new UserMapper($repository, $hydrator);
         return $userMapper;
     }
 }
