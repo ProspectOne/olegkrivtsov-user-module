@@ -5,6 +5,8 @@ use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Factory\BcryptFactory;
 use ProspectOne\UserModule\Form\Factory\UserFormFactory;
 use ProspectOne\UserModule\Form\UserForm;
+use ProspectOne\UserModule\Mapper\Factory\UserMapperFactory;
+use ProspectOne\UserModule\Mapper\UserMapper;
 use ProspectOne\UserModule\Service\AuthAdapterService;
 use ProspectOne\UserModule\Service\Factory\AuthAdapterServiceFactory;
 use ProspectOne\UserModule\Service\Factory\CurrentUserFactory;
@@ -13,7 +15,6 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use \Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Storage\Session as SessionStorage;
 
 return [
     'router' => [
@@ -118,6 +119,7 @@ return [
             'ProspectOne\UserModule\CurrentUser' => CurrentUserFactory::class,
             UserForm::class => UserFormFactory::class,
             'ProspectOne\UserModule\SessionStorage' => SessionStorageFactory::class,
+            UserMapper::class => UserMapperFactory::class,
         ],
     ],
     'view_manager' => [
