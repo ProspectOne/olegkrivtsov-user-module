@@ -2,7 +2,7 @@
 namespace ProspectOne\UserModule\Mapper;
 
 use Doctrine\ORM\EntityRepository;
-use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\AbstractHydrator;
 
 /**
  * Class UserMapper
@@ -16,7 +16,7 @@ class UserMapper
     private $repository;
 
     /**
-     * @var ClassMethods
+     * @var AbstractHydrator
      */
     private $hydrator;
 
@@ -29,9 +29,9 @@ class UserMapper
     }
 
     /**
-     * @return ClassMethods
+     * @return AbstractHydrator
      */
-    public function getHydrator(): ClassMethods
+    public function getHydrator(): AbstractHydrator
     {
         return $this->hydrator;
     }
@@ -39,11 +39,12 @@ class UserMapper
     /**
      * UserMapper constructor.
      * @param EntityRepository $repository
+     * @param AbstractHydrator $hydrator
      */
-    public function __construct(EntityRepository $repository)
+    public function __construct(EntityRepository $repository, AbstractHydrator $hydrator)
     {
         $this->repository = $repository;
-        $this->hydrator = new ClassMethods();
+        $this->hydrator = $hydrator;
     }
 
     /**

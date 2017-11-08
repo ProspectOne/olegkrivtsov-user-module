@@ -3,6 +3,7 @@ namespace ProspectOne\UserModule;
 
 use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Factory\BcryptFactory;
+use ProspectOne\UserModule\Factory\HydratorFactory;
 use ProspectOne\UserModule\Form\Factory\UserFormFactory;
 use ProspectOne\UserModule\Form\UserForm;
 use ProspectOne\UserModule\Mapper\Factory\UserMapperFactory;
@@ -120,6 +121,7 @@ return [
             UserForm::class => UserFormFactory::class,
             'ProspectOne\UserModule\SessionStorage' => SessionStorageFactory::class,
             UserMapper::class => UserMapperFactory::class,
+            'ProspectOne\UserModule\UserHydrator' => HydratorFactory::class,
         ],
     ],
     'view_manager' => [
