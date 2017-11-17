@@ -2,6 +2,7 @@
 namespace ProspectOne\UserModule\Service\Factory;
 
 use Interop\Container\ContainerInterface;
+use ProspectOne\UserModule\Model\DisabledSessionManager;
 use ProspectOne\UserModule\Service\UserManager;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\Factory\FactoryInterface;
@@ -23,9 +24,15 @@ class AuthManagerFactory implements FactoryInterface
      * @return AuthManager
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {        
+    {
+        $config = $container->get("Config");
+        $useSessions = $config["ProspectOne\UserModule"]["sessionsEnabled"];
         // Instantiate dependencies.
-        $sessionManager = $container->get(SessionManager::class);
+        if ($useSessions) {
+            $sessionManager = $container->get(SessionManager::class);
+        } else {
+            $sessionManager = $container->get(DisabledSessionManager::class);
+        }
         $authenticationService = $container->get(AuthenticationService::class);
         
         // Get contents of 'access_filter' config key (the AuthManager service
