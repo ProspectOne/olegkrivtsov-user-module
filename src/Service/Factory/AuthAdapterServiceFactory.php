@@ -49,7 +49,7 @@ class AuthAdapterServiceFactory implements FactoryInterface
         }
 
         /** @var SessionStorage $authStorage */
-        $authStorage = $container->get(SessionStorage::class);
+        $authStorage = $container->get("ProspectOne\UserModule\SessionStorage");
 
         if (!$authStorage->isEmpty()) {
             $email = $authStorage->read();
