@@ -17,12 +17,12 @@ class DisabledSessionManager extends SessionManager
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var array
