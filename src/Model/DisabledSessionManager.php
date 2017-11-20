@@ -9,7 +9,7 @@ use Zend\Session\SaveHandler\SaveHandlerInterface;
 use Zend\Session\SessionManager;
 
 /**
- * Class StorageModel
+ * Class DisabledSessionManager
  * @package ProspectOne\UserModule\Model
  */
 class DisabledSessionManager extends SessionManager
@@ -32,11 +32,11 @@ class DisabledSessionManager extends SessionManager
     /**
      * Constructor
      *
-     * @param  ConfigInterface|null           $config
-     * @param  StorageInterface|null         $storage
+     * @param  ConfigInterface|null $config
+     * @param  StorageInterface|null $storage
      * @param  SaveHandlerInterface|null $saveHandler
-     * @param  array                                 $validators
-     * @param  array                                 $options
+     * @param  array $validators
+     * @param  array $options
      * @throws RuntimeException
      */
     public function __construct(
