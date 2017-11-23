@@ -27,7 +27,7 @@ class UserMapperFactory implements FactoryInterface
         /** @var EntityManager $em */
         $em = $container->get('doctrine.entitymanager.orm_default');
         $config = $container->get('Config');
-        $userEntityClassName = $config['UserModule']['userEntity'];
+        $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
         $repository = $em->getRepository($userEntityClassName);
 
         /** @var AbstractHydrator $hydrator */

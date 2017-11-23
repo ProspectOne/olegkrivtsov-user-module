@@ -34,7 +34,7 @@ class CurrentUserFactory implements FactoryInterface
             throw new BadMethodCallException("Can be created for only logged in users");
         }
         $config = $container->get("Config");
-        $userEntityClassName = $config['UserModule']['userEntity'];
+        $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
         /** @var UserInterface $user */
         $user = $entityManager->getRepository($userEntityClassName)->findBy(['email' => $email])[0];
         return $user;

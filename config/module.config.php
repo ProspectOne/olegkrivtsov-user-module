@@ -160,7 +160,8 @@ return [
         'auth' => [
             'header' => true,
             'header_name' => "xxx-user-module-auth",
-        ]
+        ],
+        'userEntity' => User::class,
     ],
     'console' => [
         'router' => [
@@ -177,8 +178,5 @@ return [
             ],
         ],
     ],
-    'UserModule' => [
-        'userEntity' => User::class,
-    ]
 ];
 
