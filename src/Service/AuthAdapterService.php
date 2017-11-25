@@ -69,9 +69,9 @@ class AuthAdapterService implements AdapterInterface
 
     /**
      * @param UserInterface $currentUser
-     * @return AuthAdapterService2
+     * @return AuthAdapterService
      */
-    protected function setCurrentUser(UserInterface $currentUser): AuthAdapterService2
+    protected function setCurrentUser(UserInterface $currentUser): AuthAdapterService
     {
         $this->currentUser = $currentUser;
         return $this;
