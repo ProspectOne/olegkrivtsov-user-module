@@ -214,6 +214,7 @@ class AuthAdapterService implements AdapterInterface
 
         if(!empty($user) && $user->getStatus() !== $user->getStatusRetired()) {
             $this->setEmail($user->getEmail());
+            $this->setCurrentUser($user);
             return $user;
         }
 
