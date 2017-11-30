@@ -1,6 +1,7 @@
 <?php
 namespace ProspectOne\UserModule\Service;
 
+use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Exception\LogicException;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Authentication\Adapter\AdapterInterface;
@@ -269,11 +270,17 @@ class AuthAdapterService implements AdapterInterface
      */
     public function getUserByToken(string $token, bool $refresh = false)
     {
-        $user =  $this->entityManager->getRepository($this->userEntityClassName)->findOneByToken($token);
-        if ($refresh && !empty($user)) {
-            $this->entityManager->refresh($user);
+        $users = $this->entityManager->getRepository($this->userEntityClassName)->findAll();
+        /** @var User $user */
+        foreach ($users as $user) {
+            if ($user->getToken() === $token) {
+                if ($refresh && !empty($user)) {
+                    $this->entityManager->refresh($user);
+                }
+                return $user;
+            }
         }
-        return $user;
+        return null;
     }
 
     /**
