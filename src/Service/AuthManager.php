@@ -132,10 +132,13 @@ class AuthManager
         if ($mode!='restrictive' && $mode!='permissive')
             throw new \Exception('Invalid access filter mode (expected either restrictive or permissive mode');
 
-        /** @var AuthAdapter $adapter */
+        /** @var AuthAdapterService $adapter */
         $adapter = $this->authService->getAdapter();
         if (!empty($adapter)) {
-            $user = $adapter->headerAuth();
+            $user = $adapter->getCurrentUserEntity();
+            if (empty($user)) {
+                $user = $adapter->headerAuth();
+            }
             if (!empty($user)) {
                 $this->authService->getStorage()->write($user->getEmail());
             }
