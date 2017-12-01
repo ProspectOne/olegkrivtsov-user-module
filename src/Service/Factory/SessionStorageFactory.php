@@ -3,6 +3,7 @@
 namespace ProspectOne\UserModule\Service\Factory;
 
 use Interop\Container\ContainerInterface;
+use ProspectOne\UserModule\Model\DisabledSessionManager;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Zend\Session\SessionManager;
@@ -26,13 +27,23 @@ class SessionStorageFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
+        $config = $container->get("config");
+        $useSessions = $config["ProspectOne\UserModule"]["sessionsEnabled"];
+        // Instantiate dependencies.
+        if ($useSessions) {
+            $sessionManagerClass = SessionManager::class;
+        } else {
+            $sessionManagerClass = DisabledSessionManager::class;
+        }
+
+
         try {
             /** @var SessionManager $sessionManager */
-            $sessionManager = $container->get(SessionManager::class);
+            $sessionManager = $container->get($sessionManagerClass);
             $sessionManager->start();
         } catch (RuntimeException $e) {
             session_unset();
-            $sessionManager = $container->get(SessionManager::class);
+            $sessionManager = $container->get($sessionManagerClass);
             $sessionManager->start();
         }
         try {
