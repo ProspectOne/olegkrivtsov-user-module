@@ -115,7 +115,6 @@ return [
             "ProspectOne\UserModule\Service\AuthAdapter" => AuthAdapterServiceFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,
             Service\UserManager::class => Service\Factory\UserManagerFactory::class,
-            AuthAdapterService::class => AuthAdapterServiceFactory::class,
             'ProspectOne\UserModule\Bcrypt' => BcryptFactory::class,
             'ProspectOne\UserModule\CurrentUser' => CurrentUserFactory::class,
             UserForm::class => UserFormFactory::class,
@@ -123,6 +122,9 @@ return [
             UserMapper::class => UserMapperFactory::class,
             'ProspectOne\UserModule\UserHydrator' => HydratorFactory::class,
         ],
+        'aliases' => [
+            AuthAdapterService::class => "ProspectOne\UserModule\Service\AuthAdapter",
+        ]
     ],
     'view_manager' => [
         'template_path_stack' => [
