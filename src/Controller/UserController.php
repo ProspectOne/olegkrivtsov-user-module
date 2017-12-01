@@ -96,7 +96,7 @@ class UserController extends AbstractActionController
         $this->userManager = $userManager;
         $this->container = $container;
         $config = $this->container->get("Config");
-        $this->userEntityClassName = $config['UserModule']['userEntity'];
+        $this->userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
         $this->userRoleId = $userRoleId;
     }
 

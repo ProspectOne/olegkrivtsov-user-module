@@ -164,6 +164,7 @@ return [
             'header' => true,
             'header_name' => "xxx-user-module-auth",
         ],
+        'userEntity' => User::class,
         'sessionsEnabled' => true,
     ],
     'console' => [
@@ -181,8 +182,5 @@ return [
             ],
         ],
     ],
-    'UserModule' => [
-        'userEntity' => User::class,
-    ]
 ];
 

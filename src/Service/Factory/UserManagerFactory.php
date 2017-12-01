@@ -26,7 +26,7 @@ class UserManagerFactory
         $bcrypt = $container->get('ProspectOne\UserModule\Bcrypt');
 
         $config = $container->get("Config");
-        $userEntityClassName = $config['UserModule']['userEntity'];
+        $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
                         
         return new UserManager($entityManager, $bcrypt, $userEntityClassName);
     }

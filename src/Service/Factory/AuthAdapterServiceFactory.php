@@ -33,7 +33,7 @@ class AuthAdapterServiceFactory implements FactoryInterface
 
         $config = $container->get('Config');
         $headerEnabled = $config['ProspectOne\UserModule']['auth']['header'];
-        $userEntityClassName = $config['UserModule']['userEntity'];
+        $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
 
         /** @var Request $request */
         $request = $container->get("Request");
