@@ -4,8 +4,8 @@ namespace ProspectOne\UserModule\Service\Factory;
 use Interop\Container\ContainerInterface;
 use Zend\Authentication\AuthenticationService;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\Authentication\Storage\Session as SessionStorage;
 use ProspectOne\UserModule\Service\AuthAdapter;
+use Zend\Session\Storage\StorageInterface;
 
 /**
  * The factory responsible for creating of authentication service.
@@ -23,8 +23,8 @@ class AuthenticationServiceFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        /** @var SessionStorage $authStorage */
-        $authStorage = $container->get(SessionStorage::class);
+        /** @var StorageInterface $authStorage */
+        $authStorage = $container->get("ProspectOne\UserModule\SessionStorage");
         /** @var AuthAdapter $authAdapter */
         $authAdapter = $container->get(AuthAdapter::class);
 
