@@ -1,31 +1,28 @@
 <?php
-
 namespace ProspectOne\UserModule\Service\Factory;
 
 use Interop\Container\ContainerInterface;
-use ProspectOne\UserModule\Service\AuthAdapterService;
+use ProspectOne\UserModule\Service\AuthAdapter;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Http\PhpEnvironment\Request;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\Authentication\Storage\Session as SessionStorage;
-use ProspectOne\UserModule\Service\UserManager;
 
 /**
- * Class AuthAdapterServiceFactory
- * @package ProspectOne\UserModule\Service\Factory
+ * This is the factory class for AuthAdapter service. The purpose of the factory
+ * is to instantiate the service and pass it dependencies (inject dependencies).
  */
-class AuthAdapterServiceFactory implements FactoryInterface
+class AuthAdapterFactory implements FactoryInterface
 {
     /**
-     * Create an object
+     * This method creates the AuthAdapter service and returns its instance.
      *
-     * @param  ContainerInterface $container
-     * @param  string $requestedName
-     * @param  null|array $options
-     * @return AuthAdapterService
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     * @return AuthAdapter
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
-    {
+    {        
         // Get Doctrine entity manager from Service Manager.
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         /** @var Bcrypt $bcrypt */
@@ -47,23 +44,8 @@ class AuthAdapterServiceFactory implements FactoryInterface
         } else {
             $header = null;
         }
-
-        /** @var SessionStorage $authStorage */
-        $authStorage = $container->get("ProspectOne\UserModule\SessionStorage");
-
-        if (!$authStorage->isEmpty()) {
-            $email = $authStorage->read();
-            /** @var UserManager $userManagerService */
-            $userManagerService = $container->get(UserManager::class);
-            if(!$userManagerService->checkUserExists($email)){
-                $email = "";
-                $authStorage->clear();
-            }
-        } else {
-            $email = "";
-        }
-
+                        
         // Create the AuthAdapter and inject dependency to its constructor.
-        return new AuthAdapterService($entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName);
+        return new AuthAdapter($entityManager, $bcrypt, $headerEnabled, $header, '', $userEntityClassName);
     }
 }

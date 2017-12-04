@@ -8,6 +8,7 @@ use ProspectOne\UserModule\Form\Factory\UserFormFactory;
 use ProspectOne\UserModule\Form\UserForm;
 use ProspectOne\UserModule\Mapper\Factory\UserMapperFactory;
 use ProspectOne\UserModule\Mapper\UserMapper;
+use ProspectOne\UserModule\Model\DisabledSessionManager;
 use ProspectOne\UserModule\Service\AuthAdapterService;
 use ProspectOne\UserModule\Service\Factory\AuthAdapterServiceFactory;
 use ProspectOne\UserModule\Service\Factory\CurrentUserFactory;
@@ -16,6 +17,7 @@ use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use \Zend\Authentication\AuthenticationService;
+use Zend\ServiceManager\Factory\InvokableFactory;
 
 return [
     'router' => [
@@ -121,6 +123,7 @@ return [
             'ProspectOne\UserModule\SessionStorage' => SessionStorageFactory::class,
             UserMapper::class => UserMapperFactory::class,
             'ProspectOne\UserModule\UserHydrator' => HydratorFactory::class,
+            DisabledSessionManager::class => InvokableFactory::class,
         ],
         'aliases' => [
             AuthAdapterService::class => "ProspectOne\UserModule\Service\AuthAdapter",
@@ -162,7 +165,9 @@ return [
         'auth' => [
             'header' => true,
             'header_name' => "xxx-user-module-auth",
-        ]
+        ],
+        'userEntity' => User::class,
+        'sessionsEnabled' => true,
     ],
     'console' => [
         'router' => [
@@ -179,8 +184,5 @@ return [
             ],
         ],
     ],
-    'UserModule' => [
-        'userEntity' => User::class,
-    ]
 ];
 
