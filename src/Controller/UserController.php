@@ -372,7 +372,7 @@ class UserController extends AbstractActionController
         }
 
         if ($token === null || !$this->userManager->validatePasswordResetToken($token) ) {
-            return $this->redirect()->toRoute('user',
+            return $this->redirect()->toRoute('users',
                 ['action' => 'message', 'id' => 'failed']);
         }
         $user = $this->userManager->getUserByPasswordResetToken($token);
