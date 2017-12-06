@@ -26,6 +26,17 @@ class AuthAdapterServiceFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
+        $params = $this->getParams($container);
+        // Create the AuthAdapter and inject dependency to its constructor.
+        return new AuthAdapterService(...$params);
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return array
+     */
+    public function getParams(ContainerInterface $container)
+    {
         // Get Doctrine entity manager from Service Manager.
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         /** @var Bcrypt $bcrypt */
@@ -62,8 +73,6 @@ class AuthAdapterServiceFactory implements FactoryInterface
         } else {
             $email = "";
         }
-
-        // Create the AuthAdapter and inject dependency to its constructor.
-        return new AuthAdapterService($entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName);
+        return [$entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName];
     }
 }
