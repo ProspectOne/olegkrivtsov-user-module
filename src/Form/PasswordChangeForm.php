@@ -95,7 +95,7 @@ class PasswordChangeForm extends Form
                         'name'    => 'StringLength',
                         'options' => [
                             'min' => 6,
-                            'max' => 64
+                            'max' => 32
                         ],
                     ],
                 ],
