@@ -21,13 +21,25 @@ class UserManagerFactory
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {        
+        $params = $this->getParams($container);
+                        
+        return new UserManager(...$params);
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return array
+     */
+    protected function getParams(ContainerInterface $container)
+    {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         /** @var Bcrypt $bcrypt */
         $bcrypt = $container->get('ProspectOne\UserModule\Bcrypt');
 
         $config = $container->get("Config");
         $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
-                        
-        return new UserManager($entityManager, $bcrypt, $userEntityClassName);
+        $roleEntityClassName = $config['ProspectOne\UserModule']['roleEntity'];
+
+        return [$entityManager, $bcrypt, $userEntityClassName, $roleEntityClassName];
     }
 }

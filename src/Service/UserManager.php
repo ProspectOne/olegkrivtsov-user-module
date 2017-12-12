@@ -1,7 +1,7 @@
 <?php
 namespace ProspectOne\UserModule\Service;
 
-use ProspectOne\UserModule\Entity\Role;
+use ProspectOne\UserModule\Interfaces\RoleInterface;
 use ProspectOne\UserModule\Interfaces\UserInterface;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
@@ -23,6 +23,11 @@ class UserManager
      * @var string
      */
     public $userEntityClassName;
+
+    /**
+     * @var string
+     */
+    public $roleEntityClassName;
 
     /**
      * Doctrine entity manager.
@@ -52,16 +57,26 @@ class UserManager
 	}
 
     /**
+     * @return string
+     */
+	public function getRoleEntityClassName()
+    {
+        return $this->roleEntityClassName;
+    }
+
+    /**
      * UserManager constructor.
      * @param EntityManager $entityManager
      * @param Bcrypt $bcrypt
      * @param string $userEntityClassName
+     * @param string $roleEntityClassName
      */
-    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt, $userEntityClassName)
+    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt, $userEntityClassName, $roleEntityClassName)
     {
         $this->entityManager = $entityManager;
         $this->bcrypt = $bcrypt;
         $this->userEntityClassName = $userEntityClassName;
+        $this->roleEntityClassName = $roleEntityClassName;
     }
 
     /**
@@ -84,8 +99,8 @@ class UserManager
         $user->setFullName($data['full_name']);
 
         // Get role object based on role Id from form
-        /** @var Role $role */
-        $role = $this->entityManager->find(Role::class, $data['role']);
+        /** @var RoleInterface $role */
+        $role = $this->entityManager->find($this->getRoleEntityClassName(), $data['role']);
         // Set role to user
         $user->addRole($role);
 
@@ -130,8 +145,8 @@ class UserManager
         $user->setStatus($data['status']);
 
         // Get role object based on role Id from form
-        /** @var Role $role */
-        $role = $this->entityManager->find(Role::class, $data['role']);
+        /** @var RoleInterface $role */
+        $role = $this->entityManager->find($this->getRoleEntityClassName(), $data['role']);
         // Set role to user
         $user->addRole($role);
 
@@ -158,8 +173,8 @@ class UserManager
             $user->setStatus($user->getStatusActive());
             $user->setDateCreated(date('Y-m-d H:i:s'));
             // Get role object based on role Id from form
-            /** @var Role $role */
-            $role = $this->entityManager->find(Role::class, self::ADMIN_ROLE_ID);
+            /** @var RoleInterface $role */
+            $role = $this->entityManager->find($this->getRoleEntityClassName(), self::ADMIN_ROLE_ID);
             // Set role to user
             $user->addRole($role);
             $this->entityManager->persist($user);
