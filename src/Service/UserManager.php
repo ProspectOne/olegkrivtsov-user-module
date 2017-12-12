@@ -167,7 +167,7 @@ class UserManager
             /** @var UserInterface $user */
             $user = new $this->userEntityClassName();
             $user->setEmail(self::ADMIN_EMAIL);
-            $user->setFullName(self::ADMIN_NAME);
+            $user->setFullName(static::ADMIN_NAME);
             $passwordHash = $this->bcrypt->create(self::ADMIN_PASSWORD);
             $user->setPassword($passwordHash);
             $user->setStatus($user->getStatusActive());
