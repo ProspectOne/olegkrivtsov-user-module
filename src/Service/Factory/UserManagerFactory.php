@@ -23,7 +23,7 @@ class UserManagerFactory
     {        
         $params = $this->getParams($container);
                         
-        return new UserManager(...$params);
+        return $this->createService($params, UserManager::class);
     }
 
     /**
@@ -41,5 +41,15 @@ class UserManagerFactory
         $roleEntityClassName = $config['ProspectOne\UserModule']['roleEntity'];
 
         return [$entityManager, $bcrypt, $userEntityClassName, $roleEntityClassName];
+    }
+
+    /**
+     * @param array $params
+     * @param string $requestedName
+     * @return UserManager
+     */
+    protected function createService(array $params, $requestedName)
+    {
+        return new $requestedName(...$params);
     }
 }
