@@ -14,13 +14,40 @@ use ProspectOne\UserModule\Service\UserManager;
  */
 class AuthControllerFactory implements FactoryInterface
 {
+    /**
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     * @return object|AuthController
+     */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {   
+        $params = $this->getParams($container);
+        
+        return $this->createService($params);
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return array
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    public function getParams(ContainerInterface $container)
+    {
         $entityManager = $container->get('doctrine.entitymanager.orm_default');
         $authManager = $container->get(AuthManager::class);
         $authService = $container->get(AuthenticationService::class);
         $userManager = $container->get(UserManager::class);
-        
-        return new AuthController($entityManager, $authManager, $authService, $userManager);
+        return [$entityManager, $authManager, $authService, $userManager];
+    }
+
+    /**
+     * @param $params
+     * @return AuthController
+     */
+    public function createService($params)
+    {
+        return new AuthController(...$params);
     }
 }
