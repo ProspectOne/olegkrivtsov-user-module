@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManager;
  */
 class UserManager
 {
-    const ADMIN_ROLE_ID = 2;
+    const ADMIN_ROLE_ID = 1;
     const ADMIN_EMAIL = 'admin@example.com';
     const ADMIN_NAME = 'Admin';
     const ADMIN_PASSWORD = 'Secur1ty';
