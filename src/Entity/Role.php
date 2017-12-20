@@ -3,12 +3,13 @@
 namespace ProspectOne\UserModule\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ProspectOne\UserModule\Interfaces\RoleInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="user_role")
  */
-class Role
+class Role implements RoleInterface
 {
     /**
      * @ORM\Id
