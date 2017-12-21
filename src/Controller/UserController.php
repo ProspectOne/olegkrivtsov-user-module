@@ -30,6 +30,11 @@ class UserController extends AbstractActionController
     public $userEntityClassName;
 
     /**
+     * @var string
+     */
+    public $roleEntityClassName;
+
+    /**
      * Entity manager.
      * @var \Doctrine\ORM\EntityManager
      */
@@ -84,6 +89,14 @@ class UserController extends AbstractActionController
     }
 
     /**
+     * @return string
+     */
+    public function getRoleEntityClassName(): string
+    {
+        return $this->roleEntityClassName;
+    }
+
+    /**
      * Constructor.
      * @param EntityManager $entityManager
      * @param UserManager $userManager
@@ -97,6 +110,7 @@ class UserController extends AbstractActionController
         $this->container = $container;
         $config = $this->container->get("Config");
         $this->userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
+        $this->roleEntityClassName = $config['ProspectOne\UserModule']['roleEntity'];
         $this->userRoleId = $userRoleId;
     }
 
@@ -417,7 +431,7 @@ class UserController extends AbstractActionController
      */
     public function getRolesSelector()
     {
-        $roles = $this->entityManager->getRepository(Role::class)->findAll();
+        $roles = $this->entityManager->getRepository($this->getRoleEntityClassName())->findAll();
         $hydrator = new ClassMethods();
         $rolesselector = [];
         foreach ($roles as $role) {
