@@ -262,15 +262,17 @@ class AuthAdapterService implements AdapterInterface
             null,
             ['Invalid credentials.']);
     }
+
     /**
      * Find user by password reset token
      * @param string $token
      * @param bool $refresh
+     * @param bool $usersRefresh
      * @return mixed
      */
-    public function getUserByToken(string $token, bool $refresh = false)
+    public function getUserByToken(string $token, bool $refresh = false, bool $usersRefresh = false)
     {
-        $users = $this->entityManager->getRepository($this->userEntityClassName)->findAll();
+        $users = $this->entityManager->getRepository($this->userEntityClassName)->findAll($usersRefresh);
         /** @var User $user */
         foreach ($users as $user) {
             if ($user->getToken() === $token) {
