@@ -13,14 +13,13 @@ use Zend\ServiceManager\Factory\FactoryInterface;
  */
 class UserMapperFactory implements FactoryInterface
 {
-
     /**
      * Create an object
      *
      * @param  ContainerInterface $container
      * @param  string $requestedName
      * @param  null|array $options
-     * @return object
+     * @return UserMapper
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {

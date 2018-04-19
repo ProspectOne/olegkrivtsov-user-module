@@ -3,6 +3,7 @@
 namespace ProspectOne\UserModule\Service\Factory;
 
 use Interop\Container\ContainerInterface;
+use ProspectOne\UserModule\Model\UserModel;
 use ProspectOne\UserModule\Service\AuthAdapterService;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Http\PhpEnvironment\Request;
@@ -73,6 +74,9 @@ class AuthAdapterServiceFactory implements FactoryInterface
         } else {
             $email = "";
         }
-        return [$entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName];
+
+        $userModoel = $container->get(UserModel::class);
+
+        return [$entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName, $userModoel];
     }
 }
