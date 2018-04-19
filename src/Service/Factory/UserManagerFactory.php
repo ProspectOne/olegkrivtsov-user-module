@@ -2,6 +2,7 @@
 namespace ProspectOne\UserModule\Service\Factory;
 
 use Interop\Container\ContainerInterface;
+use ProspectOne\UserModule\Model\UserModel;
 use ProspectOne\UserModule\Service\UserManager;
 use Zend\Crypt\Password\Bcrypt;
 
@@ -39,8 +40,9 @@ class UserManagerFactory
         $config = $container->get("Config");
         $userEntityClassName = $config['ProspectOne\UserModule']['userEntity'];
         $roleEntityClassName = $config['ProspectOne\UserModule']['roleEntity'];
+        $userModel = $container->get(UserModel::class);
 
-        return [$entityManager, $bcrypt, $userEntityClassName, $roleEntityClassName];
+        return [$entityManager, $bcrypt, $userEntityClassName, $roleEntityClassName, $userModel];
     }
 
     /**
