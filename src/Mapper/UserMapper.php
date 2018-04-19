@@ -2,6 +2,7 @@
 namespace ProspectOne\UserModule\Mapper;
 
 use Doctrine\ORM\EntityRepository;
+use ProspectOne\UserModule\Entity\User;
 use Zend\Hydrator\AbstractHydrator;
 
 /**
@@ -55,5 +56,16 @@ class UserMapper
         $entities = $this->getRepository()->findBy([], ['id' => 'ASC']);
         $result = array_map([$this->hydrator, "extract"], $entities);
         return $result;
+    }
+
+    /**
+     * @param $email
+     * @return User
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function findByEmail($email)
+    {
+        $entity = $this->getRepository()->findOneByEmail($email);
+        return $entity;
     }
 }
