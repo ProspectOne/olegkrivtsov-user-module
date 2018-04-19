@@ -1,6 +1,7 @@
 <?php
 namespace ProspectOne\UserModule;
 
+use ProspectOne\UserModule\Entity\Role;
 use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Factory\BcryptFactory;
 use ProspectOne\UserModule\Factory\HydratorFactory;
@@ -170,6 +171,7 @@ return [
             'header_name' => "xxx-user-module-auth",
         ],
         'userEntity' => User::class,
+        'roleEntity' => Role::class,
         'sessionsEnabled' => true,
     ],
     'console' => [
