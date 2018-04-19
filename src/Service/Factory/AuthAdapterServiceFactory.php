@@ -75,8 +75,8 @@ class AuthAdapterServiceFactory implements FactoryInterface
             $email = "";
         }
 
-        $userModoel = $container->get(UserModel::class);
+        $userModel = $container->get(UserModel::class);
 
-        return [$entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName, $userModoel];
+        return [$entityManager, $bcrypt, $headerEnabled, $header, $email, $userEntityClassName, $userModel];
     }
 }
