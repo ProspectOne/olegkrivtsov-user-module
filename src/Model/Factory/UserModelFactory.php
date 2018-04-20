@@ -15,7 +15,6 @@ use Zend\ServiceManager\Factory\FactoryInterface;
  */
 class UserModelFactory implements FactoryInterface
 {
-
     /**
      * Create an object
      *
