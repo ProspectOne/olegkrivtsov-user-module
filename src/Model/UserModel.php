@@ -41,8 +41,6 @@ class UserModel
         $this->userMapper = $userMapper;
     }
 
-
-
     /**
      * @param $email
      * @return User
