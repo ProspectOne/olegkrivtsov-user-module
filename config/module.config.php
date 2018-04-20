@@ -10,6 +10,8 @@ use ProspectOne\UserModule\Form\UserForm;
 use ProspectOne\UserModule\Mapper\Factory\UserMapperFactory;
 use ProspectOne\UserModule\Mapper\UserMapper;
 use ProspectOne\UserModule\Model\DisabledSessionManager;
+use ProspectOne\UserModule\Model\Factory\UserModelFactory;
+use ProspectOne\UserModule\Model\UserModel;
 use ProspectOne\UserModule\Service\AuthAdapterService;
 use ProspectOne\UserModule\Service\Factory\AuthAdapterServiceFactory;
 use ProspectOne\UserModule\Service\Factory\CurrentUserFactory;
@@ -125,6 +127,7 @@ return [
             UserMapper::class => UserMapperFactory::class,
             'ProspectOne\UserModule\UserHydrator' => HydratorFactory::class,
             DisabledSessionManager::class => InvokableFactory::class,
+            UserModel::class => UserModelFactory::class,
         ],
         'aliases' => [
             AuthAdapterService::class => "ProspectOne\UserModule\Service\AuthAdapter",

@@ -4,6 +4,7 @@ namespace ProspectOne\UserModule\Service;
 use ProspectOne\UserModule\Entity\User;
 use ProspectOne\UserModule\Exception\LogicException;
 use ProspectOne\UserModule\Interfaces\UserInterface;
+use ProspectOne\UserModule\Model\UserModel;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 use Zend\Crypt\Password\Bcrypt;
@@ -59,6 +60,11 @@ class AuthAdapterService implements AdapterInterface
      * @var UserInterface
      */
     protected $currentUser;
+
+    /**
+     * @var UserModel
+     */
+    private $userModel;
 
     /**
      * @return UserInterface
@@ -123,6 +129,14 @@ class AuthAdapterService implements AdapterInterface
     }
 
     /**
+     * @return UserModel
+     */
+    private function getUserModel(): UserModel
+    {
+        return $this->userModel;
+    }
+
+    /**
      * AuthAdapterService constructor.
      * @param $entityManager
      * @param Bcrypt $bcrypt
@@ -130,8 +144,10 @@ class AuthAdapterService implements AdapterInterface
      * @param string $headerValue
      * @param string $email
      * @param string $userEntityClassName
+     * @param UserModel $userModel
      */
-    public function __construct($entityManager, Bcrypt $bcrypt, bool $headerAuthEnabled, ?string $headerValue = "", ?string $email = "", $userEntityClassName)
+    public function __construct($entityManager, Bcrypt $bcrypt, bool $headerAuthEnabled, ?string $headerValue = "", ?string $email = "",
+                                $userEntityClassName, UserModel $userModel)
     {
         $this->entityManager = $entityManager;
         $this->bcrypt = $bcrypt;
@@ -139,6 +155,7 @@ class AuthAdapterService implements AdapterInterface
         $this->authHeader = $headerValue;
         $this->email = $email;
         $this->userEntityClassName = $userEntityClassName;
+        $this->userModel = $userModel;
     }
 
     /**
@@ -188,8 +205,7 @@ class AuthAdapterService implements AdapterInterface
      */
     public function authenticate()
     {
-        /** @var UserInterface $user */
-        $user = $this->getUserByEmail($this->email);
+        $user = $this->getUserModel()->getUserByEmail($this->getEmail());
         return $this->validateUser($user);
     }
 
@@ -300,8 +316,8 @@ class AuthAdapterService implements AdapterInterface
     public function getCurrentUserEntity()
     {
         if(empty($this->getCurrentUser()) && !empty($this->getEmail())) {
-            $user = $this->getUserByEmail($this->getEmail());
-            if($user) {
+            $user = $this->getUserModel()->getUserByEmail($this->getEmail());
+            if(!empty($user)) {
                 $this->setCurrentUser($user);
             }
         }

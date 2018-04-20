@@ -3,6 +3,7 @@ namespace ProspectOne\UserModule\Service;
 
 use ProspectOne\UserModule\Interfaces\RoleInterface;
 use ProspectOne\UserModule\Interfaces\UserInterface;
+use ProspectOne\UserModule\Model\UserModel;
 use Zend\Crypt\Password\Bcrypt;
 use Zend\Math\Rand;
 use Doctrine\ORM\EntityManager;
@@ -41,6 +42,11 @@ class UserManager
     private $bcrypt;
 
     /**
+     * @var UserModel
+     */
+    private $userModel;
+
+    /**
 	  * @return EntityManager
 	  */
     public function getEntityManager(): EntityManager
@@ -57,6 +63,14 @@ class UserManager
 	}
 
     /**
+     * @return UserModel
+     */
+    public function getUserModel(): UserModel
+    {
+        return $this->userModel;
+    }
+  
+    /**
      * @return string
      */
 	public function getRoleEntityClassName()
@@ -70,12 +84,14 @@ class UserManager
      * @param Bcrypt $bcrypt
      * @param string $userEntityClassName
      * @param string $roleEntityClassName
+     * @param UserModel $userModel
      */
-    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt, $userEntityClassName, $roleEntityClassName)
+    public function __construct(EntityManager $entityManager, Bcrypt $bcrypt, $userEntityClassName, $roleEntityClassName, UserModel $userModel)
     {
         $this->entityManager = $entityManager;
         $this->bcrypt = $bcrypt;
         $this->userEntityClassName = $userEntityClassName;
+        $this->userModel = $userModel;
         $this->roleEntityClassName = $roleEntityClassName;
     }
 
@@ -189,9 +205,7 @@ class UserManager
      */
     public function hasRole($email, $roles)
     {
-        /** @var UserInterface $user */
-        $user = $this->getUserByEmail($email);
-
+        $user = $this->getUserModel()->getUserByEmail($email);
         return in_array($user->getRoleName(),$roles, true);
     }
 
@@ -202,7 +216,8 @@ class UserManager
      */
     public function checkUserExists(string $email)
     {
-        return !empty($this->getUserByEmail($email));
+        $user = $this->getUserModel()->getUserByEmail($email);
+        return !empty($user);
     }
 
     /**
@@ -293,17 +308,6 @@ class UserManager
     {
         return $this->entityManager->getRepository($this->userEntityClassName)
             ->findOneByPasswordResetToken($passwordResetToken);
-    }
-
-    /**
-     * Find user by Email
-     * @param string $email
-     * @return mixed
-     */
-    public function getUserByEmail(string $email)
-    {
-        return $this->entityManager->getRepository($this->userEntityClassName)
-            ->findOneByEmail($email);
     }
 
     /**
