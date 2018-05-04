@@ -28,17 +28,9 @@ class UserModel
     /**
      * @return UserMapper
      */
-    public function getUserMapper(): UserMapper
+    private function getUserMapper(): UserMapper
     {
         return $this->userMapper;
-    }
-
-    /**
-     * @param UserMapper $userMapper
-     */
-    public function setUserMapper(UserMapper $userMapper): void
-    {
-        $this->userMapper = $userMapper;
     }
 
     /**
