@@ -60,16 +60,20 @@ class AuthAdapterServiceFactory implements FactoryInterface
             $header = null;
         }
 
-        /** @var SessionStorage $authStorage */
-        $authStorage = $container->get("ProspectOne\UserModule\SessionStorage");
+        if (PHP_SAPI  !== "cli") {
+            /** @var SessionStorage $authStorage */
+            $authStorage = $container->get("ProspectOne\UserModule\SessionStorage");
 
-        if (!$authStorage->isEmpty()) {
-            $email = $authStorage->read();
-            /** @var UserManager $userManagerService */
-            $userManagerService = $container->get(UserManager::class);
-            if(!$userManagerService->checkUserExists($email)){
+            if (!$authStorage->isEmpty()) {
+                $email = $authStorage->read();
+                /** @var UserManager $userManagerService */
+                $userManagerService = $container->get(UserManager::class);
+                if (!$userManagerService->checkUserExists($email)) {
+                    $email = "";
+                    $authStorage->clear();
+                }
+            } else {
                 $email = "";
-                $authStorage->clear();
             }
         } else {
             $email = "";
