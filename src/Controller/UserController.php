@@ -136,7 +136,9 @@ class UserController extends AbstractActionController
         $rolesselector = $this->getRolesSelector();
 
         // Create user form
-        $form = $this->container->build(UserForm::class, ['create', $this->entityManager, null, $rolesselector, $this->getUserRoleId()]);
+        $form = $this->getContainer()
+                     ->get('FormElementManager')
+                     ->build(UserForm::class, ['create', $this->entityManager, null, $rolesselector, $this->getUserRoleId()]);
 
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
@@ -214,7 +216,9 @@ class UserController extends AbstractActionController
         $rolecurrent = $this->getUserRole($user);
 
         // Create user form
-        $form = $this->container->build(UserForm::class, ['update', $this->entityManager, $user, $rolesselector, $rolecurrent]);
+        $form = $this->getContainer()
+                     ->get('FormElementManager')
+                     ->build(UserForm::class, ['update', $this->entityManager, $user, $rolesselector, $rolecurrent]);
 
         // Check if user has submitted the form
         if ($this->getRequest()->isPost()) {
