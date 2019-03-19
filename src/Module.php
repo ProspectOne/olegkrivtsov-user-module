@@ -75,7 +75,12 @@ class Module
                 ->setHost(null)
                 ->setPort(null)
                 ->setUserInfo(null);
-            $redirectUrl = $uri->toString();
+
+			$redirectUrl = null;
+            if( $uri->toString() !== '/') {
+				$redirectUrl = $uri->toString();
+			}
+
 
             // Redirect the user to the "Login" page.
             return $controller->redirect()->toRoute('login', [], ['query' => ['redirectUrl' => $redirectUrl]]);
