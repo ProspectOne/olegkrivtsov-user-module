@@ -20,16 +20,16 @@ class AuthAdapterService implements AdapterInterface
 {
     /**
      * User email.
-     * @var string 
+     * @var string
      */
     private $email;
-    
+
     /**
      * Password
-     * @var string 
+     * @var string
      */
     private $password;
-    
+
     /**
      * Entity manager.
      * @var \Doctrine\ORM\EntityManager
@@ -162,9 +162,9 @@ class AuthAdapterService implements AdapterInterface
      * Sets user email.
      * @param string $email
      */
-    public function setEmail($email) 
+    public function setEmail($email)
     {
-        $this->email = $email;        
+        $this->email = $email;
     }
 
     /**
@@ -195,11 +195,11 @@ class AuthAdapterService implements AdapterInterface
      * Sets password.
      * @param string $password
      */
-    public function setPassword($password) 
+    public function setPassword($password)
     {
-        $this->password = (string)$password;        
+        $this->password = (string)$password;
     }
-    
+
     /**
      * Performs an authentication attempt.
      */
@@ -224,10 +224,6 @@ class AuthAdapterService implements AdapterInterface
 
         /** @var UserInterface $user */
         $user = $this->getUserByToken($this->getAuthHeader());
-
-        if (empty($user)) {
-            throw new LogicException(LogicException::MESSAGE);
-        }
 
         if(!empty($user) && $user->getStatus() !== $user->getStatusRetired()) {
             $this->setEmail($user->getEmail());
